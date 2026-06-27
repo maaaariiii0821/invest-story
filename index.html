@@ -1,127 +1,186 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>毎日の投資ストーリー</title>
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>毎日の投資ストーリー</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f5f5fa;
+      min-height: 100vh;
+      color: #1a1a2e;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN",
-                         "Hiragino Sans", Meiryo, sans-serif;
-            background: #f0f4f8;
-            color: #2d3748;
-            line-height: 1.7;
-            min-height: 100vh;
-        }
+    /* ===== HEADER ===== */
+    .site-header {
+      background: linear-gradient(140deg, #FF6B6B 0%, #FFE66D 52%, #4ECDC4 100%);
+      padding: 60px 24px 88px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .header-blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .date-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.22);
+      color: white;
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      margin-bottom: 26px;
+    }
+    .site-title {
+      color: white;
+      font-size: clamp(26px, 5vw, 48px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      margin-bottom: 14px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.50), 0 1px 3px rgba(0,0,0,0.35);
+    }
+    .site-subtitle {
+      color: rgba(255,255,255,0.96);
+      font-size: clamp(13px, 2vw, 16px);
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.32);
+    }
 
-        header {
-            background: linear-gradient(135deg, #155e38 0%, #27ae60 100%);
-            color: #fff;
-            text-align: center;
-            padding: 2.5rem 1rem 2rem;
-        }
+    /* ===== MAIN ===== */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 36px 16px 80px;
+    }
 
-        header h1 {
-            font-size: clamp(1.4rem, 5vw, 2rem);
-            font-weight: 700;
-            margin-bottom: 0.4rem;
-            letter-spacing: 0.04em;
-        }
+    /* ===== CARD ===== */
+    .card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 20px rgba(0,0,0,0.05);
+      margin-bottom: 24px;
+      transition: box-shadow 0.18s ease;
+    }
+    .card:hover {
+      box-shadow: 0 6px 28px rgba(0,0,0,0.10), 0 16px 48px rgba(0,0,0,0.06);
+    }
+    .card-strip { height: 5px; }
+    .card-inner { padding: 22px 24px 20px; }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .source-badge {
+      color: white;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .card-date {
+      color: #888;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .card-title {
+      font-size: clamp(15px, 3vw, 17px);
+      font-weight: 700;
+      color: #111;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .body-preview {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.75;
+      margin-bottom: 14px;
+    }
+    .body-full {
+      display: none;
+      font-size: 13px;
+      color: #222;
+      line-height: 2.0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 16px;
+      padding: 16px 18px;
+      background: #f9f9fc;
+      border-radius: 10px;
+    }
+    .card-source-link {
+      display: none;
+      font-size: 11px;
+      color: #aaa;
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+    .card-source-link:hover { color: #777; text-decoration: underline; }
+    .body-full + .card-source-link { margin-top: -8px; }
+    .toggle-btn {
+      font-family: 'Noto Sans JP', sans-serif;
+      padding: 8px 20px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.14s ease;
+      border-width: 1.5px;
+      border-style: solid;
+    }
+    .toggle-btn:hover { opacity: 0.85; }
 
-        header p {
-            font-size: 0.9rem;
-            opacity: 0.85;
-        }
-
-        main {
-            max-width: 760px;
-            margin: 2rem auto 3rem;
-            padding: 0 1rem;
-        }
-
-        .card {
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
-            margin-bottom: 1.8rem;
-            overflow: hidden;
-            border: 1px solid #e2e8f0;
-        }
-
-        .card-header {
-            background: #f0faf4;
-            border-bottom: 1px solid #c6f0d8;
-            padding: 0.65rem 1.2rem;
-        }
-
-        .card-date {
-            font-size: 0.82rem;
-            color: #27ae60;
-            font-weight: 600;
-        }
-
-        .card-title {
-            margin: 1rem 1.2rem 0.4rem;
-            font-size: 0.97rem;
-            font-weight: 700;
-            color: #155e38;
-            padding-left: 0.8rem;
-            border-left: 3px solid #27ae60;
-        }
-
-        .card-body {
-            padding: 0.8rem 1.2rem 0.8rem;
-            font-size: 0.91rem;
-            white-space: pre-wrap;
-            word-break: break-word;
-            color: #374151;
-        }
-
-        .card-link {
-            padding: 0.5rem 1.2rem 1rem;
-            font-size: 0.82rem;
-            border-top: 1px solid #f0f4f8;
-        }
-
-        .card-link a {
-            color: #27ae60;
-            text-decoration: none;
-        }
-
-        .card-link a:hover {
-            text-decoration: underline;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem 1rem;
-            color: #9ca3af;
-            font-size: 0.82rem;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        @media (max-width: 480px) {
-            header { padding: 1.8rem 1rem 1.4rem; }
-            main { margin-top: 1.2rem; }
-            .card-body { font-size: 0.87rem; }
-        }
-    </style>
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 28px 20px;
+      color: #999;
+      font-size: 12px;
+      letter-spacing: 0.03em;
+      border-top: 1px solid #eee;
+      background: white;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>📈 毎日の投資ストーリー</h1>
-        <p>ニュースから読み解く「次に来る」業界のヒント</p>
-    </header>
-    <main>
-        <!-- STORIES_START -->
-        <article class="card">
-            <div class="card-header">
-                <span class="card-date">📅 2026/06/28（日）</span>
-            </div>
-            <h2 class="card-title">イラン南部、桟橋付近に飛翔体着弾＝報道 - Reuters</h2>
-            <div class="card-body">▼今日のニュース 🌍
+
+<header class="site-header">
+  <div class="header-blob" style="top:-70px;right:-90px;width:280px;height:280px;background:rgba(255,255,255,0.10);"></div>
+  <div class="header-blob" style="bottom:-90px;left:-60px;width:260px;height:260px;background:rgba(255,255,255,0.08);"></div>
+  <div class="header-blob" style="top:44px;left:11%;width:72px;height:72px;background:rgba(255,255,255,0.13);"></div>
+  <div class="header-blob" style="bottom:24px;right:13%;width:48px;height:48px;background:rgba(255,255,255,0.10);"></div>
+  <div class="date-badge">2026年6月28日</div>
+  <h1 class="site-title">📈 毎日の投資ストーリー</h1>
+  <p class="site-subtitle">ニュースから読み解く「次に来る」業界のヒント</p>
+</header>
+
+<main>
+<!-- STORIES_START -->
+
+<article class="card">
+  <div class="card-strip" style="background:#FF6B6B;"></div>
+  <div class="card-inner">
+    <div class="card-meta">
+      <span class="source-badge" style="background:#FF6B6B;">Reuters</span>
+      <span class="card-date">📅 2026/06/28（日）</span>
+    </div>
+    <h2 class="card-title">イラン南部、桟橋付近に飛翔体着弾＝報道 - Reuters</h2>
+    <p class="body-preview">▼今日のニュース 🌍 イランの南部にある港の近くに飛翔体（ミサイルのようなもの）が着弾したと報じられました。■STEP1：何が起きた？ 中東の国「イラン」で爆発が起きました…</p>
+    <div class="body-full">▼今日のニュース 🌍
 
 イランの南部にある港の近くに
 飛翔体（ミサイルのようなもの）が
@@ -225,13 +284,20 @@
 に注目が集まります！
 
 ※投資は自己責任でお願いします😊</div>
-        </article>
-        <article class="card">
-            <div class="card-header">
-                <span class="card-date">📅 2026/06/28（日）</span>
-            </div>
-            <h2 class="card-title">米軍がイラン攻撃、船舶砲撃への報復 革命防衛隊も米拠点に反撃 - Reuters</h2>
-            <div class="card-body">▼今日のニュース 🌍
+    <button class="toggle-btn" style="background:#FFE8E8;color:#FF6B6B;border-color:#FF6B6B;">全文を読む ↓</button>
+  </div>
+</article>
+
+<article class="card">
+  <div class="card-strip" style="background:#FF6B6B;"></div>
+  <div class="card-inner">
+    <div class="card-meta">
+      <span class="source-badge" style="background:#FF6B6B;">Reuters</span>
+      <span class="card-date">📅 2026/06/28（日）</span>
+    </div>
+    <h2 class="card-title">米軍がイラン攻撃、船舶砲撃への報復 革命防衛隊も米拠点に反撃 - Reuters</h2>
+    <p class="body-preview">▼今日のニュース 🌍 アメリカ軍がイランを攻撃しました。イランによる船への砲撃への報復です。イラン側も米軍の拠点に反撃し、中東の緊張が一気に高まっています…</p>
+    <div class="body-full">▼今日のニュース 🌍
 
 アメリカ軍がイランを攻撃しました。
 イランによる船への砲撃への報復です。
@@ -280,8 +346,7 @@
 ②エネルギーの自給自足
 
 
-◆ 納得の根拠①
-「技術的な裏付け」🔧
+◆ 納得の根拠①「技術的な裏付け」🔧
 
 戦闘機やミサイルには
 「センサー」「通信機器」
@@ -294,8 +359,7 @@
 作る会社が多くあります。
 
 
-◆ 納得の根拠②
-「社会・国の動き」🏛️
+◆ 納得の根拠②「社会・国の動き」🏛️
 
 日本政府はここ数年で
 防衛予算をほぼ「2倍」に
@@ -304,8 +368,7 @@
 海外依存を減らせ」という
 国の方針も強まっています。
 世界的な戦争リスクが
-この動きをさらに
-加速させます。
+この動きをさらに加速させます。
 
 
 ◆ 注目の日本企業 3選 📈
@@ -332,20 +395,27 @@
 
 💡 まとめ
 
-「中東の戦争」→
-「石油への不安」→
-「自前エネルギー・防衛強化」→
-「日本の防衛・エネルギー企業」
+「中東の戦争」
+→「石油への不安」
+→「自前エネルギー・防衛強化」
+→「日本の防衛・エネルギー企業」
 に注目が集まるという流れです。
 国の予算が動く分野は
 追い風が長続きしやすいですよ📊</div>
-        </article>
-        <article class="card">
-            <div class="card-header">
-                <span class="card-date">📅 2026/06/28（日）</span>
-            </div>
-            <h2 class="card-title">潮流変化で動き出す！レアアース「逆襲高」の脈動を捉える特選6銘柄 ＜株探トップ特集＞</h2>
-            <div class="card-body">▼今日のテーマ🌊
+    <button class="toggle-btn" style="background:#FFE8E8;color:#FF6B6B;border-color:#FF6B6B;">全文を読む ↓</button>
+  </div>
+</article>
+
+<article class="card">
+  <div class="card-strip" style="background:#FF8C42;"></div>
+  <div class="card-inner">
+    <div class="card-meta">
+      <span class="source-badge" style="background:#FF8C42;">株探</span>
+      <span class="card-date">📅 2026/06/28（日）</span>
+    </div>
+    <h2 class="card-title">潮流変化で動き出す！レアアース「逆襲高」の脈動を捉える特選6銘柄 ＜株探トップ特集＞</h2>
+    <p class="body-preview">▼今日のテーマ🌊「レアアース争奪戦が始まった！日本の隠れた勝ち組企業を探せ」中国がレアアースの輸出を絞り始めています。レアアースとは、電気自動車やスマホに欠かせない「魔法の材料」のことです…</p>
+    <div class="body-full">▼今日のテーマ🌊
 「レアアース争奪戦が始まった！
  日本の隠れた勝ち組企業を探せ」
 ━━━━━━━━━━━━━━━
@@ -435,9 +505,7 @@
 「都市鉱山」のプロ企業。
 リサイクル技術で国内屈指。
 
-◆資源開発関連の
- JOGMECを支援する
- 三井物産（8031）
+◆三井物産（8031）
 海外のレアアース鉱山への
 投資・権益確保を進める
 総合商社の中でも
@@ -448,23 +516,29 @@
 📈まとめ
 
 「中国が絞る」
-　　→「世界が焦る」
-　　　→「日本企業に追い風」
+　→「世界が焦る」
+　　→「日本企業に追い風」
 
 レアアースは
 ニュースに出るたびに
 関連株が動く要注目テーマです🌟
 
-※これは投資の参考情報であり、
-購入をすすめるものではありません。
+※これは投資の参考情報です。
 投資は自己判断でお願いします🙏</div>
-        </article>
-        <article class="card">
-            <div class="card-header">
-                <span class="card-date">📅 2026/06/28（日）</span>
-            </div>
-            <h2 class="card-title">国内株式市場見通し：AIラリー継続の有無が焦点だが、相対的には...</h2>
-            <div class="card-body">▼今日の「風が吹けば桶屋が儲かる」💡
+    <button class="toggle-btn" style="background:#FFE8D0;color:#FF8C42;border-color:#FF8C42;">全文を読む ↓</button>
+  </div>
+</article>
+
+<article class="card">
+  <div class="card-strip" style="background:#A78BFA;"></div>
+  <div class="card-inner">
+    <div class="card-meta">
+      <span class="source-badge" style="background:#A78BFA;">市場分析</span>
+      <span class="card-date">📅 2026/06/28（日）</span>
+    </div>
+    <h2 class="card-title">国内株式市場見通し：AIラリー継続の有無が焦点だが、相対的には...</h2>
+    <p class="body-preview">▼今日の「風が吹けば桶屋が儲かる」💡「AIブームの株高が続くかどうか」が市場の注目ポイントになっています。ChatGPTなどのAIサービスが世界中で爆発的に広まり…</p>
+    <div class="body-full">▼今日の「風が吹けば桶屋が儲かる」💡
 ━━━━━━━━━━━━━━━
 
 ■STEP1：今日のニュース 📰
@@ -556,13 +630,20 @@ AIブーム
 
 ※これは投資の勉強用ヒントです。
 投資は自己責任でお願いします🙏</div>
-        </article>
-        <article class="card">
-            <div class="card-header">
-                <span class="card-date">📅 2026/06/28（日）</span>
-            </div>
-            <h2 class="card-title">本日の値上がり率ランキング（みんかぶ）</h2>
-            <div class="card-body">📈 風が吹けば桶屋が儲かる
+    <button class="toggle-btn" style="background:#EDE9FE;color:#A78BFA;border-color:#A78BFA;">全文を読む ↓</button>
+  </div>
+</article>
+
+<article class="card">
+  <div class="card-strip" style="background:#4ECDC4;"></div>
+  <div class="card-inner">
+    <div class="card-meta">
+      <span class="source-badge" style="background:#4ECDC4;">みんかぶ</span>
+      <span class="card-date">📅 2026/06/28（日）</span>
+    </div>
+    <h2 class="card-title">本日の値上がり率ランキング（みんかぶ）</h2>
+    <p class="body-preview">📈 風が吹けば桶屋が儲かる 株のヒントストーリー 本日の値上がりランキングに「セレス（3696）」が2位にランクイン！セレスは「暗号資産（仮想通貨）」に関連したポイント交換サービスを展開している会社です…</p>
+    <div class="body-full">📈 風が吹けば桶屋が儲かる
 株のヒントストーリー
 
 ■ 今日のニュース
@@ -640,11 +721,39 @@ AI処理に使われる「超高性能チップ」は、
 
 「主役より舞台を支える会社」に
 注目するのが投資の面白さです😊</div>
-        </article>
-        <!-- STORIES_END -->
-    </main>
-    <footer>
-        <p>毎朝自動更新 ｜ 投資は自己責任でお願いします</p>
-    </footer>
+    <button class="toggle-btn" style="background:#D8F8F6;color:#4ECDC4;border-color:#4ECDC4;">全文を読む ↓</button>
+  </div>
+</article>
+
+<!-- STORIES_END -->
+</main>
+
+<footer>
+  毎日の投資ストーリー &copy; 2026 ｜ 毎朝自動更新 ｜ 投資は自己責任でお願いします
+</footer>
+
+<script>
+  document.querySelectorAll('.toggle-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var card = this.closest('.card');
+      var preview = card.querySelector('.body-preview');
+      var fullBody = card.querySelector('.body-full');
+      var sourceLink = card.querySelector('.card-source-link');
+      var isExpanded = fullBody.style.display === 'block';
+      if (isExpanded) {
+        fullBody.style.display = 'none';
+        if (sourceLink) sourceLink.style.display = 'none';
+        preview.style.display = 'block';
+        this.textContent = '全文を読む ↓';
+      } else {
+        fullBody.style.display = 'block';
+        if (sourceLink) sourceLink.style.display = 'block';
+        preview.style.display = 'none';
+        this.textContent = '閉じる ↑';
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
